@@ -29,12 +29,15 @@ class Food(db.Model):
 class LogDate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     entry_date = db.Column(db.Date)
+    food = db.relationship('Food',
+                           secondary='food_date',
+                           backref=db.backref('food', cascade='delete', lazy='dynamic'))
 
     def __repr__(self):
         return '<Date: {}>'.format(self.entry_date)
 
 
-party_users = db.Table('food_date',
-                       db.Column('food_id', db.Integer, db.ForeignKey('food.id')),
-                       db.Column('log_date_id', db.Integer, db.ForeignKey('log_date.id'))
-                       )
+food_date = db.Table('food_date',
+                     db.Column('food_id', db.Integer, db.ForeignKey('food.id')),
+                     db.Column('log_date_id', db.Integer, db.ForeignKey('log_date.id'))
+                     )
