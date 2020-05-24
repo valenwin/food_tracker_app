@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Food Tracker | Add Food
+{% endblock %}
+
+{% block content %}
+    <div class="container theme-showcase col-sm-6 col-sm-offset-3" role="main">
+
+        <div class="row">
+            <div>
+
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Foods</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        {% from '_formhelper.html' import render_field %}
+                        <form method="POST" action="{{ url_for('create_food') }}">
+                            {{ form.csrf_token }}
+                            {% for field in form %}
+                                {{ field.label }}
+                                {% if field.name != 'name' %}
+                                    {{ render_field(field, class="form-control", type="number") }}
+                                {% else %}
+                                    {{ render_field(field, class="form-control", type="text") }}
+                                {% endif %}
+                            {% endfor %}
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+
+                        <div class="page-header"></div>
+
+                        {% for food in foods %}
+                            <ul class="nav nav-pills mt-2" role="tablist">
+                                <li class="active"><a>{{ food.name }}</a></li>
+                                <li><a>Protein: <span class="badge">{{ food.protein }}</span></a></li>
+                                <li><a>Carbohydrates: <span class="badge">{{ food.carbohydrates }}</span></a></li>
+                                <li><a>Fat: <span class="badge">{{ food.fat }}</span></a></li>
+                                <li><a>Calories: <span class="badge">{{ food.calories }}</span></a></li>
+                            </ul>
+                            <hr>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
