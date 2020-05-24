@@ -29,7 +29,6 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
                 <li><a href="{{ url_for('create_food') }}">Add Food Item</a></li>
-                <li><a href="{{ url_for('total_by_day') }}">Total By Day</a></li>
             </ul>
         </div>
     </div>
@@ -59,13 +58,18 @@
                             <h3 class="panel-title">{{ date }}</h3>
                         </div>
                         <div class="panel-body">
-                            <ul class="nav nav-pills" role="tablist">
-                                <li><a>Protein: <span class="badge">100</span></a></li>
-                                <li><a>Carbohydates: <span class="badge">200</span></a></li>
-                                <li><a>Fat: <span class="badge">50</span></a></li>
-                                <li><a>Calories: <span class="badge">1650</span></a></li>
-                                <li><a href="#" type="button" class="btn btn-link">View Detail</a></li>
-                            </ul>
+                            {% for total in total_by_dates %}
+                                {% if total.date == date %}
+                                    <ul class="nav nav-pills" role="tablist">
+                                        <li><a>Protein: <span class="badge">{{ total.protein }}</span></a></li>
+                                        <li><a>Carbohydrates: <span class="badge">{{ total.carbohydrates }}</span></a></li>
+                                        <li><a>Fat: <span class="badge">{{ total.fat }}</span></a></li>
+                                        <li><a>Calories: <span class="badge">{{ total.calories }}</span></a></li>
+                                        <li><a href="{{ url_for('total_by_day', date=date) }}" type="button"
+                                               class="btn btn-link">View Detail</a></li>
+                                    </ul>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 {% endfor %}

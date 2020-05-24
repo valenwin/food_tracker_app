@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <form method="POST" action="{{ url_for('total_by_day') }}">
+                        <form method="POST" action="{{ url_for('total_by_day', date=date) }}">
                             <div class="form-group">
                                 <select class="form-control" name="food-select">
                                     {% for food in food_results %}
